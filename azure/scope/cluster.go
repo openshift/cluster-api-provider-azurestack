@@ -84,7 +84,8 @@ func NewClusterScope(ctx context.Context, params ClusterScopeParams) (*ClusterSc
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to init credentials provider")
 	}
-	err = params.AzureClients.setCredentialsWithProvider(ctx, params.AzureCluster.Spec.SubscriptionID, params.AzureCluster.Spec.AzureEnvironment, credentialsProvider)
+	spec := params.AzureCluster.Spec
+	err = params.AzureClients.setCredentialsWithProvider(ctx, spec.SubscriptionID, spec.AzureEnvironment, spec.ARMEndpoint, credentialsProvider)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to configure azure settings and credentials for Identity")
 	}
