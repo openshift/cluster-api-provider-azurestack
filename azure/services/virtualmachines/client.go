@@ -49,7 +49,7 @@ var _ Client = &AzureClient{}
 
 // NewClient creates a VMs client from an authorizer.
 func NewClient(auth azure.Authorizer, apiCallTimeout time.Duration) (*AzureClient, error) {
-	opts, err := azure.ARMClientOptions(auth.CloudEnvironment())
+	opts, err := azure.ARMClientOptions(auth.CloudEnvironment(), auth.BaseURI())
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create virtualmachines client options")
 	}
