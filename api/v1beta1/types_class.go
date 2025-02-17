@@ -78,6 +78,12 @@ type AzureClusterClassSpec struct {
 	// See: https://learn.microsoft.com/azure/reliability/availability-zones-overview
 	// +optional
 	FailureDomains clusterv1.FailureDomains `json:"failureDomains,omitempty"`
+
+	// ARMEndpoint specifies a URL for the ARM Resource Manager endpoint.
+	// It may only be specified when the AzureEnvironment is set to AzureStackCloud,
+	// in which case it is required.
+	// +optional
+	ARMEndpoint string `json:"armEndpoint,omitempty"`
 }
 
 // AzureManagedControlPlaneClassSpec defines the AzureManagedControlPlane properties that may be shared across several azure managed control planes.
