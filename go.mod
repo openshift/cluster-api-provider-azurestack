@@ -1,4 +1,4 @@
-module sigs.k8s.io/cluster-api-provider-azure
+module github.com/openshift/cluster-api-provider-azurestack
 
 go 1.22.7
 
@@ -57,6 +57,7 @@ require (
 	k8s.io/utils v0.0.0-20240821151609-f90d01438635
 	sigs.k8s.io/cloud-provider-azure v1.30.4
 	sigs.k8s.io/cluster-api v1.9.5
+	sigs.k8s.io/cluster-api-provider-azure v1.19.1
 	sigs.k8s.io/cluster-api/test v1.9.5
 	sigs.k8s.io/controller-runtime v0.19.6
 	sigs.k8s.io/kind v0.27.0
@@ -231,3 +232,5 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
+
+replace sigs.k8s.io/cluster-api-provider-azure => github.com/openshift/cluster-api-provider-azurestack v0.0.0-20250405115711-366c18de8463
