@@ -20,7 +20,6 @@ import (
 	"context"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/resourcemanager/network/armnetwork/v4"
-	"github.com/pkg/errors"
 
 	infrav1 "sigs.k8s.io/cluster-api-provider-azure/api/v1beta1"
 	"sigs.k8s.io/cluster-api-provider-azure/azure"
@@ -120,10 +119,15 @@ func (s *Service) Delete(ctx context.Context) error {
 	//  Order of precedence (highest -> lowest) is: error that is not an operationNotDoneError (i.e. error deleting) -> operationNotDoneError (i.e. deleting in progress) -> no error (i.e. deleted)
 	var result error
 	for _, publicIPSpec := range specs {
-		managed, err := s.isIPManaged(ctx, publicIPSpec)
-		if err != nil && !azure.ResourceNotFound(err) {
-			return errors.Wrap(err, "could not get public IP management state")
-		}
+		// managed, err := s.isIPManaged(ctx, publicIPSpec)
+		// if err != nil && !azure.ResourceNotFound(err) {
+		// 	return errors.Wrap(err, "could not get public IP management state")
+		// }
+
+		//The above code breaks in AzureStack as it doesn't support getting tags by scope.
+		// We don't need to support managed IPs anyway so it is safe to skip, but would need to be
+		// addressed more completely to merge upstream.
+		managed := true
 
 		if !managed {
 			log.V(2).Info("Skipping IP deletion for unmanaged public IP", "public ip", publicIPSpec.ResourceName())
